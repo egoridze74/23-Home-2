@@ -5,28 +5,30 @@
 
 
 //Constructors
-template<typename T11>
-Matrix::Matrix() //default constructor
+template<typename T1>
+Matrix<T1>::Matrix() //default constructor
 {
     this->height = 0;
     this->width = 0;
     this->rows = NULL;
 }
 
-Matrix::Matrix(const Matrix& other) //copy constructor
+template<typename T1>
+Matrix<T1>::Matrix(const Matrix& other) //copy constructor
 {
     this->height = other.height;
     this->width = other.width;
-    this->rows = new T11* [height];
+    this->rows = new T1* [height];
     for (int i = 0; i < height; i++)
     {
-        this->rows[i] = new T11[width];
+        this->rows[i] = new T1[width];
         for (int j = 0; j < width; j++)
             this->rows[i][j] = other.rows[i][j];
     }
 }
 
-Matrix::Matrix(size_t dimension) //one-argument constructor
+template<typename T1>
+Matrix<T1>::Matrix(size_t dimension) //one-argument constructor
 {
     this->height = dimension;
     this->width = dimension;
@@ -38,20 +40,8 @@ Matrix::Matrix(size_t dimension) //one-argument constructor
             this->rows[i][j] = 0;
     }
 }
-Matrix::Matrix(size_t height, size_t width) //two-arguments constructor
-{
-    this->height = height;
-    this->width = width;
-    this->rows = new T11* [height];
-    for (int i = 0; i < height; i++)
-    {
-        this->rows[i] = new T11[width];
-        for (int j = 0; j < width; j++)
-            this->rows[i][j] = 0;
-    }
-}
-
-Matrix::Matrix(size_t height, size_t width, T11** rows) //normal constuctor
+template<typename T1>
+Matrix<T1>::Matrix(size_t height, size_t width) //two-arguments constructor
 {
     this->height = height;
     this->width = width;
@@ -64,7 +54,22 @@ Matrix::Matrix(size_t height, size_t width, T11** rows) //normal constuctor
     }
 }
 
-Matrix Matrix::identity(size_t dimension)
+template<typename T1>
+Matrix<T1>::Matrix(size_t height, size_t width, T1** rows) //normal constuctor
+{
+    this->height = height;
+    this->width = width;
+    this->rows = new T1* [height];
+    for (int i = 0; i < height; i++)
+    {
+        this->rows[i] = new T1[width];
+        for (int j = 0; j < width; j++)
+            this->rows[i][j] = 0;
+    }
+}
+
+template<typename T1>
+Matrix<T1> Matrix<T1>::identity(size_t dimension)
 {
     Matrix result(dimension);
     for (size_t i = 0; i < dimension; i++)
@@ -72,7 +77,8 @@ Matrix Matrix::identity(size_t dimension)
     return result;
 }
 
-Matrix::~Matrix()
+template<typename T1>
+Matrix<T1>::~Matrix()
 {
     for (int i = 0; i < this->height; i++)
         delete[] this->rows[i];
@@ -81,27 +87,32 @@ Matrix::~Matrix()
 
 
 //Getters, setters
-inline size_t Matrix::Height() const
+template<typename T1>
+inline size_t Matrix<T1>::Height() const
 {
     return this->height;
 }
 
-inline size_t Matrix::Width() const
+template<typename T1>
+inline size_t Matrix<T1>::Width() const
 {
     return this->width;
 }
 
-const T1& Matrix::get_value(size_t row, size_t column) const
+template<typename T1>
+const T1& Matrix<T1>::get_value(size_t row, size_t column) const
 {
     return this->rows[row][column];
 }
 
-void Matrix::set_value(size_t row, size_t column, T1 value)
+template<typename T1>
+void Matrix<T1>::set_value(size_t row, size_t column, T1 value)
 {
     this->rows[row][column] = value;
 }
 
-void Matrix::set_size(size_t height, size_t width)
+template<typename T1>
+void Matrix<T1>::set_size(size_t height, size_t width)
 {
     for (int i = 0; i < this->height; i++)
         delete[] this->rows[i];
@@ -119,7 +130,7 @@ void Matrix::set_size(size_t height, size_t width)
 
 
 //Comparisons
-bool Matrix::operator==(const Matrix& other) const
+bool Matrix<T1>::operator==(const Matrix& other) const
 {
     if (this->Height() != other.Height() || this->Width() != other.Width())
         return false;
@@ -236,7 +247,8 @@ Matrix operator*(const T1& k, const Matrix& m) {
 
 
 //Elementary operations
-void Matrix::swap_rows(size_t row1, size_t row2)
+template<typename T1>
+void Matrix<T1>::swap_rows(size_t row1, size_t row2)
 {
     if (row1 >= this->Height() || row2 >= this->Height())
         throw std::invalid_argument("Row index is incorrect");
@@ -272,7 +284,8 @@ void Matrix::add_multiplied_row(size_t row1, size_t row2, T2 k)
 
 
 //Hard operations
-Matrix Matrix::Transpose() const
+template<typename T1>
+Matrix<T1> Matrix<T1>::Transpose() const
 {
     Matrix result(this->Width(), this->Height());
     for (size_t i = 0; i < this->Width(); i++)
@@ -284,7 +297,8 @@ Matrix Matrix::Transpose() const
     return result;
 }
 
-double Matrix::determinant() const
+template<typename T1>
+double Matrix<T1>::determinant() const
 {
     size_t size = this->Height();
     if (size != this->Width())
@@ -330,8 +344,8 @@ double Matrix::determinant() const
     }
 }
 
-
-Matrix Matrix::operator!() const
+template<typename T1>
+Matrix<T1> Matrix<T1>::operator!() const
 {
     size_t size = this->Height();
     const T1 det = this->determinant();
@@ -392,7 +406,8 @@ Matrix Matrix::operator!() const
 
 
 //Input, Output
-std::istream& operator>>(std::istream& in, Matrix& m)
+template<typename T1>
+std::istream& operator>>(std::istream& in, Matrix<T1>& m)
 {
     size_t height, width;
     in >> height >> width;
@@ -409,7 +424,8 @@ std::istream& operator>>(std::istream& in, Matrix& m)
     return in;
 }
 
-std::ostream& operator<<(std::ostream& out, const Matrix& m)
+template<typename T1>
+std::ostream& operator<<(std::ostream& out, const Matrix<T1>& m)
 {
     const size_t height = m.Height();
     const size_t width = m.Width();

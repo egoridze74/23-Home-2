@@ -78,9 +78,9 @@ public:
 
 
 //Input, Output
-
-std::ostream& operator<<(std::ostream& o, const Matrix& m);
-
-std::istream& operator>>(std::istream& i, Matrix& m);
+template<typename T>
+std::ostream& operator<<(std::ostream& o, const Matrix<T>& m);
+template<typename T>
+std::istream& operator>>(std::istream& i, Matrix<T>& m);
 
 #endif //HOMEWORK_MATRIXES_MATRIX_H
