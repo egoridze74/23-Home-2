@@ -1,10 +1,9 @@
-#include "Matrix.h"
+﻿#include "Matrix.h"
 #include "Matrix.cpp"
 #include <iostream>
 #include <fstream>
 
-int main()
-{
+int main() {
     int k1 = 3, k2 = 4;
     Matrix<double> matrix1, matrix2, matrix3, matrix4;
 
@@ -15,11 +14,11 @@ int main()
         6 1 -2
     */
     std::cin >> matrix1;
-    std::cout << "Original Matrix A" << std::endl;
-    std::cout << matrix1;
+    std::cout << std::endl << "Original Matrix A" << std::endl;
+    std::cout << matrix1 << std::endl;
     matrix2 = !matrix1;
     std::cout << "Original Matrix A-1" << std::endl;
-    std::cout << matrix2;
+    std::cout << matrix2 << std::endl;
     matrix1.add_multiplied_row(1, 0, 2);
     std::cout << "New Matrix A" << std::endl;
     std::cout << matrix1;
