@@ -15,7 +15,7 @@ public:
 
     Matrix(const Matrix&); //copy constructor
 
-    explicit Matrix(size_t height); //one-argument constructor
+    static Matrix null(size_t height); //one-argument constructor
 
     Matrix(size_t height, size_t width); //two-arguments constructor
 

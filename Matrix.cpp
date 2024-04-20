@@ -28,7 +28,7 @@ Matrix<T>::Matrix(const Matrix& other) //copy constructor
 }
 
 template<typename T>
-Matrix<T>::Matrix(size_t dimension) //one-argument constructor
+Matrix<T> Matrix<T>::null(size_t dimension) //one-argument constructor
 {
     this->height = dimension;
     this->width = dimension;
